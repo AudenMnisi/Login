@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Essential Mart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Basic Reset & Global Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            /* Using Tailwind for font and background */
+            font-family: 'Inter', sans-serif; /* Changed font */
+            line-height: 1.6;
+            color: #333; /* Default text color */
+            background-color: #f9fafb; /* Light gray background */
+            display: flex;
+            flex-direction: column; /* Stack header and content */
+            align-items: center;
+            min-height: 100vh;
+            /* Removed body padding-top, header handles its own space */
+        }
+
+        /* --- Site Header Styling --- */
+        .site-header {
+            width: 100%; /* Full width */
+            background: linear-gradient(to right, #38a169, #2f855a); /* Green gradient */
+            padding: 1.5rem 1rem; /* Vertical and horizontal padding */
+            color: white; /* White text */
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+            margin-bottom: 2.5rem; /* Space below header */
+        }
+        .site-header h1 {
+            font-size: 2.25em; /* Slightly larger heading */
+            font-weight: 700; /* Bold */
+            letter-spacing: 0.5px; /* Slight letter spacing */
+        }
+        /* --- End Site Header Styling --- */
+
+
+        .container {
+            max-width: 400px;
+            width: 90%; /* Ensure container doesn't touch edges on small screens */
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 8px; /* Rounded corners */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Slightly larger shadow */
+            /* Removed margin-top, handled by header margin-bottom */
+        }
+
+        /* Form Styles */
+        form h2 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: #1a202c; /* Darker heading color */
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500; /* Medium weight */
+            color: #4a5568; /* Gray text */
+        }
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0; /* Lighter border */
+            border-radius: 6px; /* Slightly more rounded */
+            font-size: 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Smooth transition */
+        }
+        .form-group input:focus {
+            border-color: #38a169; /* Green focus border */
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(56, 161, 105, 0.2); /* Green focus ring */
+        }
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 1.5rem; /* Increased top margin */
+        }
+
+        /* Button Styles */
+        .btn { /* Base button class */
+             border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600; /* Semi-bold */
+            transition: background-color 0.3s ease, box-shadow 0.2s ease, transform 0.1s ease;
+            font-size: 1rem;
+            display: inline-flex; /* Align icon and text */
+            align-items: center;
+            justify-content: center;
+        }
+        .btn:hover {
+            transform: translateY(-1px); /* Slight lift on hover */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+        }
+        .btn-primary {
+            background-color: #38a169; /* Green */
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #2f855a; /* Darker green */
+        }
+        .btn-secondary {
+            background-color: #e2e8f0; /* Light gray */
+            color: #4a5568; /* Dark gray text */
+        }
+        .btn-secondary:hover {
+            background-color: #cbd5e0; /* Darker gray */
+        }
+
+        /* Error Message Style */
+        .error-message {
+            color: #e53e3e; /* Red for errors */
+            font-size: 0.875em;
+            margin-top: 5px;
+            min-height: 1.2em; /* Ensure space even when empty */
+        }
+        .error-input {
+            border-color: #e53e3e !important; /* Red border */
+            background-color: #fed7d7; /* Light red background */
+        }
+        .error-input:focus {
+             box-shadow: 0 0 0 3px rgba(229, 62, 62, 0.3); /* Red focus ring */
+        }
+
+
+        /* Link Styles */
+        .link-list { /* Class for the UL */
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 1.5rem; /* More space */
+            text-align: center;
+            font-size: 0.9em;
+        }
+        .link-list li {
+            display: inline-block;
+            margin: 0 0.75rem; /* More space between links */
+        }
+        .link-list a {
+            text-decoration: none;
+            color: #38a169; /* Green links */
+            font-weight: 500;
+        }
+        .link-list a:hover {
+            text-decoration: underline;
+            color: #2f855a; /* Darker green on hover */
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <h1>Welcome to Essential Mart</h1>
+    </header>
+
+    <div class="container">
+        <form id="login-form">
+            <h2>Login</h2>
+
+            <ul class="link-list">
+                <li><a hred="https://audenmnisi.github.io/essential-mart/" target=>Home</a></li>
+                <li><a href="https://audenmnisi.github.io/Signup/" target=>Signup</a></li>
+                <li><a href="https://audenmnisi.github.io/My-Account/" target=>My-Account</a></li>
+                <li><a href="https://Facebook.com/audymnisi" target="_blank">Facebook</a></li>
+            </ul>
+
+            <div class="form-group">
+                <label for="login-email">Email:</label>
+                <input type="email" id="login-email" name="login-email" required placeholder="you@example.com">
+                <div id="login-email-error" class="error-message"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" name="login-password" required placeholder="Enter your password">
+                <div id="login-password-error" class="error-message"></div>
+            </div>
+
+            <div class="form-actions">
+                <button type="reset" class="btn btn-secondary">Reset</button>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // --- Form Validation ---
+        function validateForm(formId, fields) {
+            const form = document.getElementById(formId);
+            let isValid = true;
+
+            fields.forEach(field => {
+                const input = document.getElementById(field.id); // Use field.id
+                const errorDiv = document.getElementById(`${field.id}-error`);
+                let isFieldValid = true;
+                let errorMessage = ''; // Specific error messages
+
+                // Trim input value
+                const value = input.value.trim();
+
+                // Check required first
+                if (field.required && !value) {
+                    isFieldValid = false;
+                    errorMessage = `${field.label} is required.`;
+                }
+                // Then check specific types if value exists
+                else if (value) {
+                    if (input.type === 'email' && !/\S+@\S+\.\S+/.test(value)) {
+                        isFieldValid = false;
+                        errorMessage = 'Please enter a valid email address.';
+                    } else if (input.type === 'password' && field.minLength && value.length < field.minLength) {
+                        isFieldValid = false;
+                        errorMessage = `${field.label} must be at least ${field.minLength} characters long.`;
+                    } else if (input.type === 'tel' && field.pattern && !field.pattern.test(value)) {
+                         isFieldValid = false;
+                         errorMessage = `Please enter a valid ${field.label} (e.g., ${input.placeholder || 'XXX-XXX-XXXX'}).`; // Use placeholder as example if available
+                    }
+                }
+
+
+                if (!isFieldValid) {
+                    errorDiv.textContent = errorMessage;
+                    input.classList.add('error-input');
+                    // Add aria-invalid attribute for accessibility
+                    input.setAttribute('aria-invalid', 'true');
+                    input.setAttribute('aria-describedby', `${field.id}-error`);
+                    isValid = false;
+                } else {
+                    errorDiv.textContent = '';
+                    input.classList.remove('error-input');
+                    input.removeAttribute('aria-invalid');
+                    input.removeAttribute('aria-describedby');
+                }
+            });
+
+            return isValid;
+        }
+
+        // Define fields to validate with their properties
+        const loginFields = [
+            { id: 'login-email', label: 'Email', required: true },
+            { id: 'login-password', label: 'Password', required: true, minLength: 8 }
+        ];
+
+        // Attach submit event listener
+        document.getElementById('login-form').addEventListener('submit', (event) => {
+            event.preventDefault(); // Prevent default form submission
+
+            // Perform validation
+            if (validateForm('login-form', loginFields)) {
+                console.log('Login form is valid. Submitting...'); // Log success
+                alert('Login Attempted! (Validation passed)'); // User feedback
+
+                // --- Form Submission Logic ---
+                // Example using Fetch API to send data to a server:
+                /*
+                const formData = new FormData(event.target);
+                fetch('/api/login', { // Replace with your actual login endpoint
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        // Handle server-side errors (e.g., wrong password)
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json(); // Assuming server responds with JSON
+                })
+                .then(data => {
+                    console.log('Login successful:', data);
+                    // Redirect on success
+                    // window.location.href = 'my-account.html'; // Or dashboard, etc.
+                })
+                .catch(error => {
+                    console.error('Login error:', error);
+                    // Display a general error message to the user
+                    const generalErrorDiv = document.getElementById('login-general-error'); // Add a div for this if needed
+                    if (generalErrorDiv) generalErrorDiv.textContent = 'Login failed. Please try again.';
+                    alert('Login failed. Please check your credentials or try again later.');
+                });
+                */
+                // --- End Form Submission Logic ---
+
+            } else {
+                 console.log("Form validation failed. Please check the errors."); // Log failure
+                 // Optionally focus the first invalid field
+                 const firstError = document.querySelector('.error-input');
+                 if (firstError) {
+                     firstError.focus();
+                 }
+            }
+        });
+
+        // Optional: Clear errors on reset
+        document.getElementById('login-form').addEventListener('reset', () => {
+            loginFields.forEach(field => {
+                 const input = document.getElementById(field.id);
+                 const errorDiv = document.getElementById(`${field.id}-error`);
+                 if (input) {
+                    input.classList.remove('error-input');
+                    input.removeAttribute('aria-invalid');
+                    input.removeAttribute('aria-describedby');
+                 }
+                 if (errorDiv) errorDiv.textContent = '';
+            });
+             // Also clear any general error message if you added one
+             // const generalErrorDiv = document.getElementById('login-general-error');
+             // if (generalErrorDiv) generalErrorDiv.textContent = '';
+        });
+
+    </script>
+
+</body>
+</html>
